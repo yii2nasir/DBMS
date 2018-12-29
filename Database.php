@@ -65,11 +65,6 @@ function con(){
     }
 function install(){
    
-    $q[]="CREATE TABLE IF NOT EXISTS `contact` (`id` int(11) NOT NULL AUTO_INCREMENT,`name` varchar(40) NOT NULL,
-        `email` varchar(70) NOT NULL,`phone` varchar(15) NOT NULL,`country` varchar(20) NOT NULL,
-        UNIQUE KEY `email` (`email`),KEY `id` (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
-    $q[]="CREATE TABLE IF NOT EXISTS `log` (`id` int(11) NOT NULL AUTO_INCREMENT,`email` varchar(56) NOT NULL,
-        `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1";
     $q[]="CREATE TABLE IF NOT EXISTS `blacklist` (`id` int(11) NOT NULL AUTO_INCREMENT,`email` varchar(70) NOT NULL,
         PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1";
     $q[]="create VIEW IF NOT EXISTS `fresh_list` AS SELECT `contact`.`id` AS `id`, `contact`.`name` AS `name`, `contact`.`email` AS `email`, `contact`.`phone` AS `phone`, `contact`.`country` AS `country` FROM `contact` WHERE ( ( NOT( `contact`.`email` IN( SELECT `log`.`email` FROM `log` ) ) ) AND( NOT( `contact`.`email` IN( SELECT `blacklist`.`email` FROM `blacklist` ) ) ) )";
