@@ -63,6 +63,24 @@ function con(){
             }
             echo 'Connected successfully';
     }
+	
+	
+	function update($t,$w,$data){ //table_name,Where_condition,data_in_array
+	//$t='city';$w='id=5';$data=array('name'=>'Greater Noida');
+	$q2='';foreach($data as $k=>$v){ $q2.=$k.'= "'.$v.'" ';}$q2=rtrim($q2," ,");
+	$query= "UPDATE $t SET $q2 WHERE $t.$w";
+	$this->query($query);
+	return true;
+	//echo $query;
+	}
+	
+function delete($table,$del,$andor='and'){//$del=array('name'=>'abc','state_id'=>'1');
+    $q2='';foreach($del as $k=>$v){ $q2.=$k.'= "'.$v.'" '.$andor.' ';}$q2=rtrim($q2," $andor");
+    $query="DELETE FROM `$table` WHERE $q2";
+    $this->query($query);
+    return true;
+}
+
 function install(){
    
     $q[]="CREATE TABLE IF NOT EXISTS `blacklist` (`id` int(11) NOT NULL AUTO_INCREMENT,`email` varchar(70) NOT NULL,
@@ -104,4 +122,11 @@ $values=rtrim($values,',');
         //echo "mysql_close";
     }
 }
+
+
+//echo "<pre>";print_r($obj->migration());
+//$obj->update('city','id=7',['name'=>'Noida']);
+//$obj->insert('city',['name'=>'rajsthan','state_id'=>1]);
+//$obj->delete('city',['name'=>'rajsthan','state_id'=>1],'and/or/');
+
 
