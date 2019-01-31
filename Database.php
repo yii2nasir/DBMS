@@ -122,11 +122,18 @@ $values=rtrim($values,',');
         //echo "mysql_close";
     }
 }
-
+?>
 
 //echo "<pre>";print_r($obj->migration());
 //$obj->update('city','id=7',['name'=>'Noida']);
 //$obj->insert('city',['name'=>'rajsthan','state_id'=>1]);
 //$obj->delete('city',['name'=>'rajsthan','state_id'=>1],'and/or/');
+<div class="col-md-2">
+<div class="form-group field-claimrequest-user_id required">
+<label class="control-label" for="claimrequest-user_id">Expence Type</label>
+<input type="text" id="claimrequest-user_id" class="form-control"  value="Local Expence" readonly="true" >
 
-
+<div class="help-block"></div>
+</div> 
+</div>
+        

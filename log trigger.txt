@@ -1,0 +1,68 @@
+CREATE DEFINER=`root`@`localhost` TRIGGER `COMMENTlog2` BEFORE UPDATE ON `claim_request` FOR EACH ROW BEGIN
+IF (NEW.ho_comment != OLD.ho_comment) THEN
+
+ INSERT INTO `comment_log` set request_id= NEW.`id`, comment_by=3,`comment`=OLD.ho_comment;
+
+END IF;
+
+IF (NEW.ro_comment != OLD.ro_comment) THEN
+INSERT INTO `comment_log` set request_id= NEW.`id`, comment_by=2,`comment`=OLD.ro_comment;
+ end if;
+ 
+IF (NEW.ac_comment != OLD.ac_comment) THEN
+INSERT INTO `comment_log` set request_id= NEW.`id`, comment_by=4,`comment`=OLD.ac_comment;
+end if;
+ 
+END
+
+
+_________________
+____________________
+
+CREATE TABLE `claim_request` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) NOT NULL COMMENT 'Employee Code',
+ `state_id` int(9) NOT NULL COMMENT 'Level Id',
+ `request_type` varchar(30) DEFAULT NULL,
+ `visit_from` varchar(100) NOT NULL COMMENT 'Visit From',
+ `visit_to` varchar(100) NOT NULL COMMENT 'Visit To',
+ `mode` varchar(100) NOT NULL COMMENT 'Mode',
+ `date` varchar(50) NOT NULL DEFAULT '',
+ `amount` decimal(10,0) NOT NULL,
+ `amount2` decimal(10,0) NOT NULL COMMENT 'Fare',
+ `amount3` decimal(10,0) NOT NULL COMMENT 'Hotel Expenses',
+ `amount4` decimal(10,0) NOT NULL COMMENT 'Food',
+ `amount5` decimal(10,0) NOT NULL COMMENT 'Miscellaneous',
+ `amountinword` varchar(150) NOT NULL COMMENT 'Amount In Words',
+ `purpose` varchar(100) DEFAULT NULL,
+ `dc` varchar(50) DEFAULT NULL,
+ `fund_agency` varchar(100) DEFAULT NULL COMMENT 'Funding Agency',
+ `nature_service` varchar(100) DEFAULT NULL COMMENT 'Nature of Services ',
+ `ro_comment` varchar(255) DEFAULT NULL COMMENT 'Ro Comment',
+ `naturehead` varchar(100) DEFAULT NULL COMMENT 'Natural Head',
+ `project_id` int(11) DEFAULT NULL,
+ `project_budget_line_id` int(11) DEFAULT NULL,
+ `costcenter_id` int(11) DEFAULT NULL,
+ `program_id` int(11) DEFAULT NULL,
+ `locationdescription_id` int(11) DEFAULT NULL,
+ `ho_comment` varchar(255) DEFAULT NULL,
+ `tds` decimal(10,0) DEFAULT NULL,
+ `advance` decimal(10,0) DEFAULT NULL,
+ `net` decimal(10,0) DEFAULT NULL,
+ `refnumber` varchar(30) DEFAULT NULL,
+ `refdate` date DEFAULT NULL,
+ `ac_comment` varchar(255) DEFAULT NULL COMMENT 'Account Comment',
+ `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ `active` tinyint(1) NOT NULL DEFAULT '1',
+
+
+____________________________
+
+CREATE TABLE `comment_log` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `request_id` int(11) NOT NULL,
+ `comment_by` int(11) NOT NULL,
+ `comment` varchar(255) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1
