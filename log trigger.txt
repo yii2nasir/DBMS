@@ -1,3 +1,22 @@
+DELIMITER $$
+
+DROP TRIGGER `update_data `$$
+
+CREATE TRIGGER `update_data` AFTER UPDATE on `data_table`
+FOR EACH ROW
+BEGIN
+    IF (NEW.field1 != OLD.field1) THEN
+        INSERT INTO data_tracking set old_value = OLD.field1, new_value = NEW.field1, field = "field1";
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+/////////////////////////////////////////////////////
+
+
+
 CREATE DEFINER=`root`@`localhost` TRIGGER `COMMENTlog2` BEFORE UPDATE ON `claim_request` FOR EACH ROW BEGIN
 IF (NEW.ho_comment != OLD.ho_comment) THEN
 

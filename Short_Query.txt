@@ -1,0 +1,4 @@
+//INSERT QUERY//
+
+ Yii::$app->getDb()->createCommand()->insert('claim_request_log', ['request_id' => $id,'status_id'=>++$model->state_id])->execute();
+           
